@@ -2,6 +2,7 @@
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PagedList;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -10,6 +11,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -22,9 +24,10 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+			return View(productList);
 
-            return View(productList);
-        }
+
+		}
         public IActionResult Details(int productId)
         {
             ShoppingCart cartObj = new() 
