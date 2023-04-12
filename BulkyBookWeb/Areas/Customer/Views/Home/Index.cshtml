@@ -26,14 +26,17 @@
 									<div class="pl-1">
 										<p>As low as: <b>$@product.Price100.ToString("0.00")</b></p>
 									</div>
-							</div>
-							
-						</div>
-							<div>
-									<a asp-action="Details" class="btn btn-primary form-control" asp-route-productId="@product.Id">
+									<a asp-action="Details" class="btn btn-primary form-control stretched-link" asp-route-productId="@product.Id">
 										Details
 									</a>
 							</div>
+							
+						</div>
+							@*<div>
+									<a asp-action="Details" class="btn btn-primary form-control stretched-link" asp-route-productId="@product.Id">
+										Details
+									</a>
+							</div>*@
 					</div> 
 				</div>
 			</div>
