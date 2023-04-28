@@ -239,6 +239,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
+
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -273,7 +274,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             OrderVM.OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderId == OrderVM.OrderHeader.Id, includeProperties: "Product");
 
             //stripe settings 
-            var domain = "https://localhost:44300/";
+            var domain = "https://localhost:44374/";
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string>
