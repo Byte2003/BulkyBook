@@ -3,12 +3,14 @@ using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Rotativa;
 using Stripe.Checkout;
+using System.Drawing.Printing;
 using System.Security.Claims;
-using static System.Net.WebRequestMethods;
 
 namespace BulkyBookWeb.Areas.Customer.Controllers
 {
@@ -188,10 +190,13 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 				}
 				var service = new SessionService();
 				Session session = service.Create(options);
-				_unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
-				_unitOfWork.Save();
-				Response.Headers.Add("Location", session.Url);
-				return new StatusCodeResult(303);
+
+                _unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
+               
+				
 			}
 			else
 			{
@@ -218,12 +223,14 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 			}
 			_emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order From Bulky Book", "<p> Thank you for buying our product </p>");
 			List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+			HttpContext.Session.Clear();
 			_unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
 			_unitOfWork.Save();
 
 			return View(id);
 		}
-		private double getPriceBasedOnQuantity(double quantity, double price, double price50, double price100)
+		
+        private double getPriceBasedOnQuantity(double quantity, double price, double price50, double price100)
 		{
 			if (quantity < 50)
 			{

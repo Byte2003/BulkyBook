@@ -2,6 +2,7 @@
 @using Microsoft.Extensions.Options
 @inject IOptions<BulkyBook.Utility.StripeSettings> Stripe
 <form method="post">
+	<input asp-for="OrderHeader.Id" hidden />
 	<br />
 	<div class="container">
 		<div class="card">

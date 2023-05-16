@@ -1,45 +1,51 @@
-﻿@model IEnumerable<Product>
+﻿
+@model BulkyBook.Models.ViewModels.IndexVM
 @using Microsoft.AspNetCore.Http.Extensions
-
-
-<div class="row pb-3">
-	@foreach (var product in Model)
+@using BulkyBook.DataAccess
+@{
+	foreach (var category in Model.categories)
 	{
-		
-		<div class="col-lg-3 col-md-6">
-				<div class="row p-2">
-					<div class="col-12 p-1" style="border:1px solid #ccc; border-radius: 5px;">
-						<div class="card" >
-								<div class="pl-1" style="display: flex">
-									<img src="@product.ImageUrl" class="card-img-top rounded"style="object-fit:cover;height:400px" />
-										
+		<h3 class="my-4">@category.Name</h3>
+		<div class="row pb-3">
+			@foreach (var product in Model.products)
+			{
+				@if (product.Category.Name == category.Name)
+				{
+					<div class="col-lg-3 col-md-6">
+						<div class="row p-2">
+							<div class="col-12 p-1" style="border:1px solid #ccc; border-radius: 5px;">
+								<div class="card">
+									<div class="pl-1" style="display: flex">
+										<img src="@product.ImageUrl" class="card-img-top rounded"style="object-fit:cover;height:400px" />
+
+									</div>
+
+									<div class="card-body">
+											<div class="pl-1">
+												<p class="card-title h5 text-primary text-truncate ">@product.Title</p>
+												<p class="card-title text-info">by <b>@product.Author</b></p>
+											</div>
+											<div class="pl-1">
+												<p>List Price: <strike><b>$@product.ListPrice.ToString("0.00")</b></strike></p>
+											</div>
+											<div class="pl-1">
+												<p>As low as: <b>$@product.Price100.ToString("0.00")</b></p>
+											</div>
+											<a asp-action="Details" class="btn btn-primary form-control stretched-link" asp-route-productId="@product.Id">
+												Details
+											</a>
+									</div>
+
 								</div>
-									
-							<div class="card-body">
-									<div class="pl-1">
-										<p class="card-title h5 text-primary">@product.Title</p>
-										<p class="card-title text-info">by <b>@product.Author</b></p>
-									</div>
-									<div class="pl-1">
-										<p>List Price: <strike><b>$@product.ListPrice.ToString("0.00")</b></strike></p>
-									</div>
-									<div class="pl-1">
-										<p>As low as: <b>$@product.Price100.ToString("0.00")</b></p>
-									</div>
-									<a asp-action="Details" class="btn btn-primary form-control stretched-link" asp-route-productId="@product.Id">
-										Details
-									</a>
-							</div>
-							
+
+							</div> 
 						</div>
-							@*<div>
-									<a asp-action="Details" class="btn btn-primary form-control stretched-link" asp-route-productId="@product.Id">
-										Details
-									</a>
-							</div>*@
-					</div> 
-				</div>
-			</div>
+						</div>
+				}
+
+			}
+
+		</div>
 	}
- 
-</div>
+}
+

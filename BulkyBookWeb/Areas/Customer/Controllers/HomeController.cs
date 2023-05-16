@@ -1,9 +1,11 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PagedList;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -24,8 +26,14 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
-			return View(productList);
+            IndexVM indexVM = new IndexVM()
+            {
+                products = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType"),
+                categories = _unitOfWork.Category.GetAll()
+            };
+            
+
+			return View(indexVM);
 
 
 		}

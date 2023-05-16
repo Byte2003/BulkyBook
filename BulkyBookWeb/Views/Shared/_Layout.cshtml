@@ -17,9 +17,9 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-2 px-4">
 			<div class="container-fluid">
-				<a class="navbar-brand text-white" href="#">BulkyBook</a>
+				<a class="navbar-brand text-white" href="#" style="cursor:default">BulkyBook</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -29,22 +29,23 @@
 					<a class="nav-link text-white" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
 
 				</li>
-						@if (User.IsInRole(SD.Role_Admin))
-						{
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Management</a>
-								<div class="dropdown-menu" >
-									<a class="dropdown-item  " asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-									<a class="dropdown-item  " asp-area="Admin" asp-controller="CoverType" asp-action="Index">CoverType</a>
-									<a class="dropdown-item  " asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
-									<a class="dropdown-item  " asp-area="Admin" asp-controller="Company" asp-action="Index">Company</a>
+				@if (User.IsInRole(SD.Role_Admin))
+				{
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Management</a>
+						<div class="dropdown-menu px-2" style="width:100%" >
+							<a class="dropdown-item  " asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+							<a class="dropdown-item  " asp-area="Admin" asp-controller="CoverType" asp-action="Index">CoverType</a>
+							<a class="dropdown-item  " asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+							<a class="dropdown-item  " asp-area="Identity" asp-page="/Account/Register">Create User</a>
+							<a class="dropdown-item  " asp-area="Admin" asp-controller="Company" asp-action="Index">Company</a>
 
-								</div>
-							</li>
-						}
+						</div>
+					</li>
+				}
 
 				<li class="nav-item">
-					<a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">
+					<a class="nav-link text-white" asp-area="Admin" asp-controller="Order" asp-action="Index">
 						Manage Order
 					</a>
 				</li>
@@ -54,7 +55,7 @@
 
 
 				<li class="nav-item">
-					<a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+					<a class="nav-link text-white" asp-area="Customer" asp-controller="Cart" asp-action="Index">
 							@await Component.InvokeAsync("ShoppingCart")
 					</a>
 				</li>
